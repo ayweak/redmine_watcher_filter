@@ -1,0 +1,11 @@
+<p>
+<label><%= l(:watcher_filter_label) %></label>
+<%= select_tag(:watcher_filter_group_select, options_for_select(groups)) %>
+<%= select_tag(:watcher_filter_role_select, options_for_select(roles)) %>
+<input id="watcher_filter_check_button" type="button" value="<%= l(:watcher_filter_button_check_all) %>">
+<input id="watcher_filter_uncheck_button" type="button" value="<%= l(:watcher_filter_button_uncheck_all) %>">
+</p>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag("watcher_filter", :plugin => "redmine_watcher_filter") %>
+<% end %>

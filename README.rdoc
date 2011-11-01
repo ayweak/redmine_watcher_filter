@@ -1,0 +1,26 @@
+= Watcher Filter
+
+Add control that filter issue watchers by group and role, and check/uncheck them.
+
+== Compatible
+
+Compatible with Redmine 1.2.x.
+
+== Install
+
+See http://www.redmine.org/projects/redmine/wiki/Plugins
+
+Or execute following:
+
+$ cd $REDMINE_ROOT
+$ ruby script/plugin install git://github.com/ayweak/redmine_watcher_filter.git
+
+Then, restart your redmine web server.
+
+== Uninstall
+
+$ rm -rf $REDMINE_ROOT/vendor/plugins/redmine_watcher_filter
+
+== License
+
+This plugin is licensed under the GNU GPL v2. See gpl-2.0.txt for details.

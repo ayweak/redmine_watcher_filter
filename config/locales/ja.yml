@@ -1,0 +1,8 @@
+ja:
+  watcher_filter_label: "ウォッチャーのフィルター"
+  watcher_filter_select_all_groups: "すべてのグループ"
+  watcher_filter_select_non_group: "グループ未所属"
+  watcher_filter_select_all_roles: "すべてのロール"
+  watcher_filter_select_non_role: "ロールなし"
+  watcher_filter_button_check_all: "すべて選択"
+  watcher_filter_button_uncheck_all: "すべて選択解除"
