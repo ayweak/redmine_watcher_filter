@@ -62,7 +62,9 @@
 
     function checkWatchers(groupSelectId, roleSelectId, checkboxName) {
         var func = function(checkbox, condition) {
-            checkbox.checked = condition ? true : false;
+            if (condition) {
+                checkbox.checked = true;
+            }
         };
 
         updateWatchers(groupSelectId, roleSelectId, checkboxName, func);
@@ -70,7 +72,9 @@
 
     function uncheckWatchers(groupSelectId, roleSelectId, checkboxName) {
         var func = function(checkbox, condition) {
-            checkbox.checked = condition ? false : true;
+            if (condition) {
+                checkbox.checked = false;
+            }
         };
 
         updateWatchers(groupSelectId, roleSelectId, checkboxName, func);
