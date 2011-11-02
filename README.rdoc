@@ -12,14 +12,14 @@ See http://www.redmine.org/projects/redmine/wiki/Plugins
 
 Or execute following:
 
-$ cd $REDMINE_ROOT
-$ ruby script/plugin install git://github.com/ayweak/redmine_watcher_filter.git
+  $ cd $REDMINE_ROOT
+  $ ruby script/plugin install git://github.com/ayweak/redmine_watcher_filter.git
 
 Then, restart your redmine web server.
 
 == Uninstall
 
-$ rm -rf $REDMINE_ROOT/vendor/plugins/redmine_watcher_filter
+  $ rm -rf $REDMINE_ROOT/vendor/plugins/redmine_watcher_filter
 
 == License
 
