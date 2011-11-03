@@ -3,6 +3,10 @@
 module WatcherFilter
   class Hooks < Redmine::Hook::ViewListener
     def view_issues_form_details_bottom(context={})
+      if context[:request].parameters[:action] != 'new' then
+        return ''
+      end
+
       project = Project.find(
         :first,
         :conditions => [
