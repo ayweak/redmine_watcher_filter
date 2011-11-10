@@ -5,5 +5,5 @@ en:
   watcher_filter_select_non_group: "Non group"
   watcher_filter_select_all_roles: "All roles"
   watcher_filter_select_non_role: "Non role"
-  watcher_filter_button_check: "Check all"
-  watcher_filter_button_uncheck: "Uncheck all"
+  watcher_filter_button_check_all: "Check all"
+  watcher_filter_button_uncheck_all: "Uncheck all"
