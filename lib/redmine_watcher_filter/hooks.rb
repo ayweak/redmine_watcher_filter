@@ -3,16 +3,16 @@
 module WatcherFilter
   class Hooks < Redmine::Hook::ViewListener
     def view_issues_form_details_bottom(context={})
-      if context[:request].parameters[:action] != 'new' then
+      action = context[:request].parameters[:action]
+      project_id = context[:request].parameters[:project_id]
+
+      if (action != 'new' && action != 'create') || !project_id then
         return ''
       end
 
       project = Project.find(
         :first,
-        :conditions => [
-          'identifier = ?',
-          context[:request].parameters[:project_id]
-        ]
+        :conditions => [ 'identifier = ?', project_id ]
       )
 
       user_ids = project.members.collect {|member| member.user_id}
