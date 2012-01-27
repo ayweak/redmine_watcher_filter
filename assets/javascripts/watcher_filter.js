@@ -1,4 +1,6 @@
 (function() {
+    var defaultGroupIndex = 0;
+    var defaultRoleIndex = 0;
     var defaultNameValue = "";
     var noNameInput = true;
 
@@ -20,6 +22,8 @@
         var checkButton = document.getElementById(checkButtonId);
         var uncheckButton = document.getElementById(uncheckButtonId);
 
+        defaultGroupIndex = groupSelect.selectedIndex;
+        defaultRoleIndex = roleSelect.selectedIndex;
         defaultNameValue = nameInput.value;
 
         addEventListener(
@@ -70,17 +74,13 @@
         addEventListener(
             checkButton,
             "click",
-            function() {
-                checkWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { setWatcherChecks(checkboxName, true); }
         );
 
         addEventListener(
             uncheckButton,
             "click",
-            function() {
-                uncheckWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { setWatcherChecks(checkboxName, false); }
         );
     }
 
@@ -97,12 +97,13 @@
 
         if (noNameInput) {
             nameInput.value = "";
+            noNameInput = false;
         }
     }
 
     function setDefaultName(nameInputId) {
         var nameInput = document.getElementById(nameInputId);
-        var value = nameInput.value.replace(/^\s+|\s+$/g, "");
+        var value = trim(nameInput.value);
 
         if (value === "") {
             nameInput.value = defaultNameValue;
@@ -118,50 +119,23 @@
         var roleSelect = document.getElementById(roleSelectId);
         var nameInput = document.getElementById(nameInputId);
 
-        groupSelect.selectedIndex = 0;
-        roleSelect.selectedIndex = 0;
+        groupSelect.selectedIndex = defaultGroupIndex;
+        roleSelect.selectedIndex = defaultRoleIndex;
         nameInput.value = defaultNameValue;
         noNameInput = true;
     }
 
     function filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName) {
-        var func = function(checkbox, condition) {
-            checkbox.parentNode.style.display = condition ? "inline" : "none";
-        };
-
-        updateWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName, func);
-    }
-
-    function checkWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName) {
-        var func = function(checkbox, condition) {
-            if (condition) {
-                checkbox.checked = true;
-            }
-        };
-
-        updateWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName, func);
-    }
-
-    function uncheckWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName) {
-        var func = function(checkbox, condition) {
-            if (condition) {
-                checkbox.checked = false;
-            }
-        };
-
-        updateWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName, func);
-    }
-
-    function updateWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName, func) {
         var userIds = getUserIds(groupSelectId, roleSelectId);
         var name = noNameInput
                  ? ""
-                 : document.getElementById(nameInputId).value.toLowerCase();
+                 : trim(document.getElementById(nameInputId).value).toLowerCase();
         var checkboxes = document.getElementsByName(checkboxName);
 
         for (var i = 0; i < checkboxes.length; i++) {
-            var userId = checkboxes[i].value;
-            var userName = checkboxes[i].parentNode.lastChild.nodeValue.toLowerCase();
+            var checkbox = checkboxes[i];
+            var userId = checkbox.value;
+            var userName = checkbox.parentNode.lastChild.nodeValue.toLowerCase();
             var j;
 
             for (j = 0; j < userIds.length; j++) {
@@ -170,7 +144,17 @@
                 }
             }
 
-            func(checkboxes[i], j < userIds.length);
+            checkbox.parentNode.style.display = j < userIds.length ? "inline" : "none";
+        }
+    }
+
+    function setWatcherChecks(checkboxName, value) {
+        var checkboxes = document.getElementsByName(checkboxName);
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].parentNode.style.display !== "none") {
+                checkboxes[i].checked = value;
+            }
         }
     }
 
@@ -191,6 +175,16 @@
         }
 
         return userIds;
+    }
+
+    function trim(str) {
+        var result = "";
+
+        if (str !== undefined && str !== null) {
+            result = String(str).replace(/^\s+|\s+$/g, "");
+        }
+
+        return result;
     }
 
     if (window.addEventListener) {

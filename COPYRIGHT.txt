@@ -1,7 +1,7 @@
-Watcher Filter is a redmine plugin that filter issue watchers by
-group and role, and check/uncheck them.
+Watcher Filter is a redmine plugin that filters issue watchers by
+group, role and watcher name.
 
-Copyright (C) 2011 ayweak
+Copyright (C) 2011-2012 ayweak
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
