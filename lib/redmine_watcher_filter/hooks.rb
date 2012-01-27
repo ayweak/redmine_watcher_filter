@@ -10,11 +10,7 @@ module WatcherFilter
         return ''
       end
 
-      project = Project.find(
-        :first,
-        :conditions => [ 'identifier = ?', project_id ]
-      )
-
+      project = Project.find(project_id)
       user_ids = project.members.collect {|member| member.user_id}
 
       groups = get_groups(project, user_ids)
