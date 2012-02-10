@@ -1,7 +1,4 @@
 (function() {
-    var defaultGroupIndex = 0;
-    var defaultRoleIndex = 0;
-    var defaultNameValue = "";
     var noNameInput = true;
 
     function init() {
@@ -23,10 +20,6 @@
         var checkButton = document.getElementById(checkButtonId);
         var uncheckButton = document.getElementById(uncheckButtonId);
         var issueForm = document.getElementById(issueFormId);
-
-        defaultGroupIndex = groupSelect.selectedIndex;
-        defaultRoleIndex = roleSelect.selectedIndex;
-        defaultNameValue = nameInput.value;
 
         addEventListener(
             groupSelect,
@@ -118,7 +111,7 @@
         var value = trim(nameInput.value);
 
         if (value === "") {
-            nameInput.value = defaultNameValue;
+            nameInput.value = nameInput.defaultValue;
             noNameInput = true;
         } else {
             nameInput.value = value;
@@ -131,10 +124,22 @@
         var roleSelect = document.getElementById(roleSelectId);
         var nameInput = document.getElementById(nameInputId);
 
-        groupSelect.selectedIndex = defaultGroupIndex;
-        roleSelect.selectedIndex = defaultRoleIndex;
-        nameInput.value = defaultNameValue;
+        groupSelect.selectedIndex = getDefaultSelectedIndex(groupSelect);
+        roleSelect.selectedIndex = getDefaultSelectedIndex(roleSelect);
+        nameInput.value = nameInput.defaultValue;
         noNameInput = true;
+    }
+
+    function getDefaultSelectedIndex(select) {
+        var i;
+
+        for (i = 0; i < select.options.length; i++) {
+            if (select.options[i].defaultSelected) {
+                break;
+            }
+        }
+
+        return i < select.options.length ? i : 0;
     }
 
     function filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName) {
