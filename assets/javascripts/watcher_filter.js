@@ -13,6 +13,7 @@
         var checkButtonId = "watcher_filter_check_button";
         var uncheckButtonId = "watcher_filter_uncheck_button";
         var checkboxName = "issue[watcher_user_ids][]";
+        var issueFormId = "issue-form";
 
         var groupSelect = document.getElementById(groupSelectId);
         var roleSelect = document.getElementById(roleSelectId);
@@ -21,6 +22,7 @@
         var clearButton = document.getElementById(clearButtonId);
         var checkButton = document.getElementById(checkButtonId);
         var uncheckButton = document.getElementById(uncheckButtonId);
+        var issueForm = document.getElementById(issueFormId);
 
         defaultGroupIndex = groupSelect.selectedIndex;
         defaultRoleIndex = roleSelect.selectedIndex;
@@ -81,6 +83,16 @@
             uncheckButton,
             "click",
             function() { setWatcherChecks(checkboxName, false); }
+        );
+
+        addEventListener(
+            issueForm,
+            "submit",
+            function() {
+                var controlIds = [groupSelectId, roleSelectId, nameInputId];
+                disableControls(controlIds);
+                window.setTimeout(function() { enableControls(controlIds) }, 1000);
+            }
         );
     }
 
@@ -155,6 +167,18 @@
             if (checkboxes[i].parentNode.style.display !== "none") {
                 checkboxes[i].checked = value;
             }
+        }
+    }
+
+    function disableControls(controlIds) {
+        for (var i = 0; i < controlIds.length; i++) {
+            document.getElementById(controlIds[i]).disabled = true;
+        }
+    }
+
+    function enableControls(controlIds) {
+        for (var i = 0; i < controlIds.length; i++) {
+            document.getElementById(controlIds[i]).disabled = false;
         }
     }
 
