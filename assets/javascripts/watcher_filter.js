@@ -69,13 +69,13 @@
         addEventListener(
             checkButton,
             "click",
-            function() { setWatcherChecks(checkboxName, true); }
+            function() { checkWatchers(checkboxName); }
         );
 
         addEventListener(
             uncheckButton,
             "click",
-            function() { setWatcherChecks(checkboxName, false); }
+            function() { uncheckWatchers(checkboxName); }
         );
 
         addEventListener(
@@ -165,12 +165,22 @@
         }
     }
 
-    function setWatcherChecks(checkboxName, value) {
+    function checkWatchers(checkboxName) {
         var checkboxes = document.getElementsByName(checkboxName);
 
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].parentNode.style.display !== "none") {
-                checkboxes[i].checked = value;
+                checkboxes[i].checked = true;
+            }
+        }
+    }
+
+    function uncheckWatchers(checkboxName) {
+        var checkboxes = document.getElementsByName(checkboxName);
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].parentNode.style.display !== "none") {
+                checkboxes[i].checked = false;
             }
         }
     }
