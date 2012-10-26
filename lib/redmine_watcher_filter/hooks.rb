@@ -16,8 +16,8 @@ module WatcherFilter
       groups = get_groups(project, user_ids)
       roles = get_roles(project, user_ids)
 
-      context[:controller].send(
-        :render_to_string,
+      context[:hook_caller].send(
+        :render,
         {
           :partial => 'hooks/redmine_watcher_filter/watcher_filter',
           :locals => { :groups => groups, :roles => roles }
