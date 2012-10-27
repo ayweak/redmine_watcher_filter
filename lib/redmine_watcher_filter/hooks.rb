@@ -3,6 +3,10 @@
 module WatcherFilter
   class Hooks < Redmine::Hook::ViewListener
     def view_issues_form_details_bottom(context={})
+      if !context[:issue].safe_attribute?(:watcher_user_ids) then
+        return ''
+      end
+
       action = context[:request].parameters[:action]
       project_id = context[:request].parameters[:project_id]
 
