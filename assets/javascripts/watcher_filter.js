@@ -21,6 +21,11 @@
         var uncheckButton = document.getElementById(uncheckButtonId);
         var issueForm = document.getElementById(issueFormId);
 
+        document.getElementById("watchers_form").parentNode.insertBefore(
+            document.getElementById("watcher_filter_form"),
+            document.getElementById("watchers_form").nextSibling
+        );
+
         addEventListener(
             groupSelect,
             "change",
