@@ -34,7 +34,8 @@ module WatcherFilter
       groups = []
       groups << [
         '<<' + l(:watcher_filter_select_all_groups) + '>>',
-        user_ids * ','
+        user_ids * ',',
+        { :selected => 'selected' }
       ]
 
       non_group_user_ids = user_ids.clone
@@ -65,7 +66,8 @@ module WatcherFilter
       roles = []
       roles << [
         '<<' + l(:watcher_filter_select_all_roles) + '>>',
-        user_ids * ','
+        user_ids * ',',
+        { :selected => 'selected' }
       ]
 
       non_role_user_ids = user_ids.clone
