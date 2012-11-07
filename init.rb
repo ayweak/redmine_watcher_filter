@@ -6,7 +6,7 @@ Redmine::Plugin.register :redmine_watcher_filter do
   name 'Redmine Watcher Filter plugin'
   author 'ayweak'
   description 'Filter issue watchers by group, role and watcher names.'
-  version '1.0.0'
+  version '2.0.0'
   url 'https://github.com/ayweak/redmine_watcher_filter'
   author_url 'https://github.com/ayweak'
 end
