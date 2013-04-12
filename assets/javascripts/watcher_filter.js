@@ -1,96 +1,117 @@
+// -*- coding: utf-8 -*-
+
 (function() {
-    var noNameInput = true;
+    var FILTER_FORM_ID = "watcher_filter_form";
+    var NONMEMBER_SELECT_ID = "watcher_filter_nonmember_select";
+    var GROUP_SELECT_ID = "watcher_filter_group_select";
+    var ROLE_SELECT_ID = "watcher_filter_role_select";
+    var NAME_KEYWORD_INPUT_ID = "watcher_filter_name_keyword_input";
+    var APPLY_BUTTON_ID = "watcher_filter_apply_button";
+    var CLEAR_BUTTON_ID = "watcher_filter_clear_button";
+    var CHECK_BUTTON_ID = "watcher_filter_check_button";
+    var UNCHECK_BUTTON_ID = "watcher_filter_uncheck_button";
+
+    var CHECKBOX_NAME = "issue[watcher_user_ids][]";
+    var ISSUE_FORM_ID = "issue-form";
+    var WATCHERS_FORM_ID = "watchers_form";
+    var NEW_WATCHER_FORM_DIV_ID = "ajax-modal";
+
+    var NONMEMBER_SHOW = "SHOW";
+    var NONMEMBER_HIDE = "HIDE";
+    var NONMEMBER_ONLY = "ONLY";
+
+    var noNameKeywordInput = true;
 
     function init() {
-        var groupSelectId = "watcher_filter_group_select";
-        var roleSelectId = "watcher_filter_role_select";
-        var nameInputId = "watcher_filter_name_input";
-        var applyButtonId = "watcher_filter_apply_button";
-        var clearButtonId = "watcher_filter_clear_button";
-        var checkButtonId = "watcher_filter_check_button";
-        var uncheckButtonId = "watcher_filter_uncheck_button";
-        var checkboxName = "issue[watcher_user_ids][]";
-        var issueFormId = "issue-form";
+        var nonmemberSelect = document.getElementById(NONMEMBER_SELECT_ID);
+        var groupSelect = document.getElementById(GROUP_SELECT_ID);
+        var roleSelect = document.getElementById(ROLE_SELECT_ID);
+        var nameKeywordInput = document.getElementById(NAME_KEYWORD_INPUT_ID);
+        var applyButton = document.getElementById(APPLY_BUTTON_ID);
+        var clearButton = document.getElementById(CLEAR_BUTTON_ID);
+        var checkButton = document.getElementById(CHECK_BUTTON_ID);
+        var uncheckButton = document.getElementById(UNCHECK_BUTTON_ID);
+        var issueForm = document.getElementById(ISSUE_FORM_ID);
+        var newWatcherFormDiv = document.getElementById(NEW_WATCHER_FORM_DIV_ID);
 
-        var groupSelect = document.getElementById(groupSelectId);
-        var roleSelect = document.getElementById(roleSelectId);
-        var nameInput = document.getElementById(nameInputId);
-        var applyButton = document.getElementById(applyButtonId);
-        var clearButton = document.getElementById(clearButtonId);
-        var checkButton = document.getElementById(checkButtonId);
-        var uncheckButton = document.getElementById(uncheckButtonId);
-        var issueForm = document.getElementById(issueFormId);
+        document.getElementById(WATCHERS_FORM_ID).parentNode.insertBefore(
+            document.getElementById(FILTER_FORM_ID),
+            document.getElementById(WATCHERS_FORM_ID).nextSibling
+        );
 
-        document.getElementById("watchers_form").parentNode.insertBefore(
-            document.getElementById("watcher_filter_form"),
-            document.getElementById("watchers_form").nextSibling
+        addEventListener(
+            nonmemberSelect,
+            "change",
+            function() { filterWatchers(); dehighlightApplyButton(); }
         );
 
         addEventListener(
             groupSelect,
             "change",
-            function() {
-                filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { filterWatchers(); dehighlightApplyButton(); }
         );
 
         addEventListener(
             roleSelect,
             "change",
-            function() {
-                filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { filterWatchers(); dehighlightApplyButton(); }
         );
 
         addEventListener(
-            nameInput,
+            nameKeywordInput,
             "focus",
-            function() { setBlankName(nameInputId); }
+            function() { setBlankNameKeyword(); }
         );
 
         addEventListener(
-            nameInput,
+            nameKeywordInput,
             "blur",
-            function() { setDefaultName(nameInputId); }
+            function() { setDefaultNameKeyword(); }
         );
 
         addEventListener(
             applyButton,
             "click",
-            function() {
-                filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { filterWatchers(); dehighlightApplyButton(); }
         );
 
         addEventListener(
             clearButton,
             "click",
-            function() {
-                clearConditions(groupSelectId, roleSelectId, nameInputId);
-                filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName);
-            }
+            function() { clearConditions(); filterWatchers(); dehighlightApplyButton(); }
         );
 
         addEventListener(
             checkButton,
             "click",
-            function() { checkWatchers(checkboxName); }
+            function() { checkWatchers(); }
         );
 
         addEventListener(
             uncheckButton,
             "click",
-            function() { uncheckWatchers(checkboxName); }
+            function() { uncheckWatchers(); }
         );
 
         addEventListener(
             issueForm,
             "submit",
             function() {
-                var controlIds = [groupSelectId, roleSelectId, nameInputId];
+                var controlIds = [
+                    NONMEMBER_SELECT_ID,
+                    GROUP_SELECT_ID,
+                    ROLE_SELECT_ID,
+                    NAME_KEYWORD_INPUT_ID
+                ];
                 disableControls(controlIds);
-                window.setTimeout(function() { enableControls(controlIds) }, 1000);
+                window.setTimeout(function() { enableControls(controlIds); }, 1000);
             }
+        );
+
+        addEventListener(
+            newWatcherFormDiv,
+            "submit",
+            function() { highlightApplyButton(); }
         );
     }
 
@@ -102,123 +123,185 @@
         }
     }
 
-    function setBlankName(nameInputId) {
-        var nameInput = document.getElementById(nameInputId);
+    function setBlankNameKeyword() {
+        var nameKeywordInput = document.getElementById(NAME_KEYWORD_INPUT_ID);
 
-        if (noNameInput) {
-            nameInput.value = "";
-            noNameInput = false;
+        if (noNameKeywordInput) {
+            nameKeywordInput.value = "";
+            noNameKeywordInput = false;
         }
     }
 
-    function setDefaultName(nameInputId) {
-        var nameInput = document.getElementById(nameInputId);
-        var value = trim(nameInput.value);
+    function setDefaultNameKeyword() {
+        var nameKeywordInput = document.getElementById(NAME_KEYWORD_INPUT_ID);
+        var value = trim(nameKeywordInput.value);
 
         if (value === "") {
-            nameInput.value = nameInput.defaultValue;
-            noNameInput = true;
+            nameKeywordInput.value = nameKeywordInput.defaultValue;
+            noNameKeywordInput = true;
         } else {
-            nameInput.value = value;
-            noNameInput = false;
+            nameKeywordInput.value = value;
+            noNameKeywordInput = false;
         }
     }
 
-    function clearConditions(groupSelectId, roleSelectId, nameInputId) {
-        var groupSelect = document.getElementById(groupSelectId);
-        var roleSelect = document.getElementById(roleSelectId);
-        var nameInput = document.getElementById(nameInputId);
+    function clearConditions() {
+        var nonmemberSelect = document.getElementById(NONMEMBER_SELECT_ID);
+        var groupSelect = document.getElementById(GROUP_SELECT_ID);
+        var roleSelect = document.getElementById(ROLE_SELECT_ID);
+        var nameKeywordInput = document.getElementById(NAME_KEYWORD_INPUT_ID);
 
+        nonmemberSelect.selectedIndex = getDefaultSelectedIndex(nonmemberSelect);
         groupSelect.selectedIndex = getDefaultSelectedIndex(groupSelect);
         roleSelect.selectedIndex = getDefaultSelectedIndex(roleSelect);
-        nameInput.value = nameInput.defaultValue;
-        noNameInput = true;
+        nameKeywordInput.value = nameKeywordInput.defaultValue;
+        noNameKeywordInput = true;
     }
 
     function getDefaultSelectedIndex(select) {
-        var i;
-
-        for (i = 0; i < select.options.length; i++) {
+        for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].defaultSelected) {
-                break;
+                return i;
             }
         }
 
-        return i < select.options.length ? i : 0;
+        return 0;
     }
 
-    function filterWatchers(groupSelectId, roleSelectId, nameInputId, checkboxName) {
-        var userIds = getUserIds(groupSelectId, roleSelectId);
-        var name = noNameInput
-                 ? ""
-                 : trim(document.getElementById(nameInputId).value).toLowerCase();
-        var checkboxes = document.getElementsByName(checkboxName);
+    function highlightApplyButton() {
+        document.getElementById(APPLY_BUTTON_ID).className += " highlight";
+    }
+
+    function dehighlightApplyButton() {
+        var applyButton = document.getElementById(APPLY_BUTTON_ID);
+        var classes = applyButton.className.split(/\s+/);
+        var index = indexOf(classes, "highlight");
+
+        if (index >= 0) {
+            classes.splice(index, 1);
+            applyButton.className = classes.join(" ");
+        }
+    }
+
+    function filterWatchers() {
+        var evaluates = buildEvalFunction();
+        var checkboxes = document.getElementsByName(CHECKBOX_NAME);
 
         for (var i = 0; i < checkboxes.length; i++) {
             var checkbox = checkboxes[i];
-            var userId = checkbox.value;
-            var userName = checkbox.parentNode.lastChild.nodeValue.toLowerCase();
-            var j;
+            checkbox.parentNode.style.display = evaluates(checkbox) ? "inline" : "none";
+        }
+    }
 
-            for (j = 0; j < userIds.length; j++) {
-                if (userIds[j] === userId && userName.indexOf(name) >= 0) {
-                    break;
-                }
+    function buildEvalFunction() {
+        var nonmemberCond = getNonmemberCondition();
+        var allMemberIds;
+        var evaluates;
+
+        if (nonmemberCond === NONMEMBER_ONLY) {
+            allMemberIds = getAllMemberIds();
+            evaluates = function(checkbox) {
+                return indexOf(allMemberIds, checkbox.value) < 0;
+            };
+        } else {
+            var selectedMemberIds = getSelectedMemberIds();
+            var nameKeyword = getNameKeyword().toLowerCase();
+
+            var isTarget = function(checkbox) {
+                var name = checkbox.parentNode.lastChild.nodeValue.toLowerCase();
+                return indexOf(selectedMemberIds, checkbox.value) >= 0
+                    && name.indexOf(nameKeyword) >= 0;
+            };
+
+            if (nonmemberCond === NONMEMBER_HIDE) {
+                evaluates = function(checkbox) { return isTarget(checkbox); };
+            } else {
+                allMemberIds = getAllMemberIds();
+                evaluates = function(checkbox) {
+                    return isTarget(checkbox)
+                        || indexOf(allMemberIds, checkbox.value) < 0;
+                };
             }
-
-            checkbox.parentNode.style.display = j < userIds.length ? "inline" : "none";
         }
+
+        return evaluates;
     }
 
-    function checkWatchers(checkboxName) {
-        var checkboxes = document.getElementsByName(checkboxName);
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].parentNode.style.display !== "none") {
-                checkboxes[i].checked = true;
-            }
-        }
+    function getNonmemberCondition() {
+        var nonmemberSelect = document.getElementById(NONMEMBER_SELECT_ID);
+        return nonmemberSelect.options[nonmemberSelect.selectedIndex].value;
     }
 
-    function uncheckWatchers(checkboxName) {
-        var checkboxes = document.getElementsByName(checkboxName);
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].parentNode.style.display !== "none") {
-                checkboxes[i].checked = false;
-            }
-        }
+    function getAllMemberIds() {
+        var groupSelect = document.getElementById(GROUP_SELECT_ID);
+        return groupSelect.options[getDefaultSelectedIndex(groupSelect)].value.split(",");
     }
 
-    function disableControls(controlIds) {
-        for (var i = 0; i < controlIds.length; i++) {
-            document.getElementById(controlIds[i]).disabled = true;
-        }
-    }
-
-    function enableControls(controlIds) {
-        for (var i = 0; i < controlIds.length; i++) {
-            document.getElementById(controlIds[i]).disabled = false;
-        }
-    }
-
-    function getUserIds(groupSelectId, roleSelectId) {
-        var groupSelect = document.getElementById(groupSelectId);
-        var roleSelect = document.getElementById(roleSelectId);
+    function getSelectedMemberIds() {
+        var groupSelect = document.getElementById(GROUP_SELECT_ID);
+        var roleSelect = document.getElementById(ROLE_SELECT_ID);
         var groupValues = groupSelect.options[groupSelect.selectedIndex].value.split(",");
         var roleValues = roleSelect.options[roleSelect.selectedIndex].value.split(",");
-        var userIds = [];
+        var memberIds = [];
 
         for (var i = 0; i < groupValues.length; i++) {
             for (var j = 0; j < roleValues.length; j++) {
                 if (groupValues[i] === roleValues[j]) {
-                    userIds.push(groupValues[i]);
+                    memberIds.push(groupValues[i]);
                     break;
                 }
             }
         }
 
-        return userIds;
+        return memberIds;
+    }
+
+    function getNameKeyword() {
+        return noNameKeywordInput
+            ? ""
+            : trim(document.getElementById(NAME_KEYWORD_INPUT_ID).value);
+    }
+
+    function checkWatchers() {
+        setWatcherChecked(true);
+    }
+
+    function uncheckWatchers() {
+        setWatcherChecked(false);
+    }
+
+    function setWatcherChecked(value) {
+        var checkboxes = document.getElementsByName(CHECKBOX_NAME);
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].parentNode.style.display !== "none") {
+                checkboxes[i].checked = value;
+            }
+        }
+    }
+
+    function enableControls(controlIds) {
+        setControlDisabled(controlIds, false);
+    }
+
+    function disableControls(controlIds) {
+        setControlDisabled(controlIds, true);
+    }
+
+    function setControlDisabled(controlIds, value) {
+        for (var i = 0; i < controlIds.length; i++) {
+            document.getElementById(controlIds[i]).disabled = value;
+        }
+    }
+
+    function indexOf(array, element) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] === element) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     function trim(str) {
