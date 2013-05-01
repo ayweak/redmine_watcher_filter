@@ -4,7 +4,7 @@ Add control that filters issue watchers by group, role and watcher name.
 
 == Compatible
 
-Compatible with Redmine 2.1.x.
+Compatible with Redmine 2.1.x, 2.3.x.
 
 == Install
 
