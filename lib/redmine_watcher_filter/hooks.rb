@@ -29,6 +29,17 @@ module WatcherFilter
       )
     end
 
+    def view_issues_show_description_bottom(context={})
+      if !User.current.allowed_to?(:view_issue_watchers, context[:project]) then
+        return ''
+      end
+
+      context[:hook_caller].send(
+        :render,
+        { :partial => 'hooks/redmine_watcher_filter/assignee_filter' }
+      )
+    end
+
     private
     def get_groups(project, user_ids)
       groups = []
