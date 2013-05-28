@@ -45,7 +45,7 @@ jQuery(function($) {
         var bText = $(b).text();
 
         if (aText < bText) {
-            return -1
+            return -1;
         } else if (aText > bText) {
             return 1;
         } else {
