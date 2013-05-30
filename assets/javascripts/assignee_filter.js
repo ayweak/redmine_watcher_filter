@@ -11,7 +11,7 @@ jQuery(function($) {
             // For new issue page
             return function() {
                 return $("input[name='issue[watcher_user_ids][]']:checked").map(function() {
-                    return this.value;
+                    return $(this).val();
                 });
             };
         } else if ($("#watchers")[0]) {
@@ -21,6 +21,8 @@ jQuery(function($) {
                     return $(this).attr("href").replace(/^.+\/(\d+)$/, "$1");
                 });
             };
+        } else {
+            return null;
         }
     })();
 
@@ -28,25 +30,23 @@ jQuery(function($) {
         return;
     }
 
-    getOptgroup = function(id, label, afterElement) {
+    getOptgroup = function(id, label, element) {
         var optgroup = $("#" + id);
 
         if (!optgroup[0]) {
-            optgroup = $("<optgroup/>").insertAfter(afterElement);
-            optgroup.attr("id", id);
-            optgroup.attr("label", label);
+            optgroup = $("<optgroup/>").insertAfter(element).attr("id", id).attr("label", label);
         }
 
         return optgroup;
     };
 
-    compareString = function(a, b) {
-        var aText = $(a).text();
-        var bText = $(b).text();
+    compareString = function(element1, element2) {
+        var text1 = $(element1).text();
+        var text2 = $(element2).text();
 
-        if (aText < bText) {
+        if (text1 < text2) {
             return -1;
-        } else if (aText > bText) {
+        } else if (text1 > text2) {
             return 1;
         } else {
             return 0;
@@ -65,7 +65,6 @@ jQuery(function($) {
         var watcherOptgroup;
         var otherOptgroup;
         var watcherIds;
-        var i;
 
         if (sorted) {
             return;
@@ -76,26 +75,26 @@ jQuery(function($) {
                               + "[id!='assignee_optgroup_watchers']"
                               + "[id!='assignee_optgroup_others']"
                               + " option";
-        options = $("#issue_assigned_to_id").find("option:not(" + excludeOptionSelector + ")");
+        options = $(this).find("option:not(" + excludeOptionSelector + ")").toArray();
 
         if (options.length <= 2) {
             return;
         }
 
+        otherOptgroup = getOptgroup("assignee_optgroup_others", "Others", options[1]);
         watcherOptgroup = getOptgroup("assignee_optgroup_watchers", "Watchers", options[1]);
-        otherOptgroup = getOptgroup("assignee_optgroup_others", "Others", watcherOptgroup);
 
         options = options.slice(2).sort(compareString);
 
         watcherIds = getWatcherIds();
 
-        for (i = 0; i < options.length; i++) {
-            if ($.inArray(options[i].value, watcherIds) !== -1) {
-                watcherOptgroup.append(options[i]);
+        $.each(options, function() {
+            if ($.inArray($(this).val(), watcherIds) !== -1) {
+                watcherOptgroup.append(this);
             } else {
-                otherOptgroup.append(options[i]);
+                otherOptgroup.append(this);
             }
-        }
+        });
 
         sorted = true;
     });
