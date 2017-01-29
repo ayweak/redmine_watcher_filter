@@ -1,0 +1,17 @@
+/* coding: utf-8-unix */
+
+#user_search_by_extra_condition p {
+  margin-top: 0;
+}
+
+#user_search_by_extra_condition p:not(:last-child) {
+  margin-bottom: 3px;
+}
+
+#user_search_by_extra_condition input {
+  width: 90%;
+}
+
+#user_search_by_extra_condition select {
+  width: 95%;
+}
