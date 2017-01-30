@@ -4,7 +4,7 @@ Add control that filters issue watchers by group, role and custom field values.
 
 == Screenshots
 
-{Watcher dialog}[rdoc-image:doc/images/watcher_dialog.png]
+{Watcher dialog}[https://github.com/ayweak/redmine_watcher_filter/blob/master/doc/images/watcher_dialog.png]
 
 == Compatible
 
