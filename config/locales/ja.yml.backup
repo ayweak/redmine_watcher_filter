@@ -1,6 +1,0 @@
-# English strings go here for Rails i18n
-en:
-  watcher_filter_custom_field_value: "カスタムフィールドの値"
-  watcher_filter_group_select: "グループを選択"
-  watcher_filter_role_select: "ロールを選択"
-  watcher_filter_not_in_any_group: "グループ無所属"

@@ -4,3 +4,4 @@ en:
   watcher_filter_group_select: "Select a group"
   watcher_filter_role_select: "Select a role"
   watcher_filter_not_in_any_group: "Not in any group"
+  watcher_filter_button_add_and_continue: "Add and continue"

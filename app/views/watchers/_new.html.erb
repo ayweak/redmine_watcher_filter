@@ -51,6 +51,18 @@
             );
         }
     );
+    $('#new-watcher-form').on('ajax:success', function() {
+        if ($(this).parents('.ui-dialog-content').dialog('isOpen')) {
+            WatcherFilter.search(
+                'user_search',
+                'user_search_by_cfv',
+                'user_search_by_group',
+                'user_search_by_role',
+                'users_for_watcher',
+                url
+            );
+        }
+    });
 })();
   <% end %>
 
@@ -59,6 +71,7 @@
   </div>
 
   <p class="buttons">
+    <%= submit_tag l(:watcher_filter_button_add_and_continue), :name => nil %>
     <%= submit_tag l(:button_add), :name => nil, :onclick => "hideModal(this);" %>
     <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
   </p>
