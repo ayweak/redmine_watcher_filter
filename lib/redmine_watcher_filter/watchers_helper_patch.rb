@@ -12,8 +12,9 @@ module WatcherFilter
         unloadable
 
         def render_group_select(project)
-          list = [[l(:watcher_filter_not_in_any_group), -1]]
+          list = []
           if project.present?
+            list = [[l(:watcher_filter_not_in_any_group), -1]]
             list.concat(project.principals.where("#{Principal.table_name}.type = ?", 'Group').sorted.map{|g| [g.name, g.id]})
           end
           select_tag 'user_search_by_group', options_for_select(list), :prompt => "#{l(:watcher_filter_group_select)}"
