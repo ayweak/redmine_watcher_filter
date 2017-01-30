@@ -2,6 +2,10 @@
 
 Add control that filters issue watchers by group, role and custom field values.
 
+== Screenshots
+
+{Watcher dialog}[doc/images/watcher_dialog.png]
+
 == Compatible
 
 Compatible with Redmine 3.3.x.
@@ -20,6 +24,8 @@ Then, restart your redmine web server.
 == Uninstall
 
   $ rm -rf $REDMINE_ROOT/plugins/redmine_watcher_filter
+
+Then, restart your redmine web server.
 
 == License
 
