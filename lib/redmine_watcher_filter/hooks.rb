@@ -1,3 +1,5 @@
+# -*- coding: utf-8-unix -*-
+
 module WatcherFilter
   class Hooks < Redmine::Hook::ViewListener
     render_on :view_issues_new_top, partial: 'hooks/redmine_watcher_filter/watcher_filter'
