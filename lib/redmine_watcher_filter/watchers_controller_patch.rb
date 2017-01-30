@@ -32,7 +32,8 @@ module WatcherFilter
           end
         end
         if params[:role_id].present?
-          scope = scope.joins(:members => :roles).where("#{Role.table_name}.id = ?", params[:role_id])
+          scope = scope.joins(:members => :roles).
+            where("#{Role.table_name}.id = ?", params[:role_id]).uniq
         end
         users = scope.active.visible.sorted.like(params[:q]).to_a
         if @watchables && @watchables.size == 1
