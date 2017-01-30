@@ -4,7 +4,7 @@ Add control that filters issue watchers by group, role and custom field values.
 
 == Screenshots
 
-{Watcher dialog}[doc/images/watcher_dialog.png]
+{Watcher dialog}[rdoc-image:doc/images/watcher_dialog.png]
 
 == Compatible
 
