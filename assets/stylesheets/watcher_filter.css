@@ -15,3 +15,8 @@
 #user_search_by_extra_condition select {
   width: 95%;
 }
+
+#new-watcher-form p.buttons a.toggle-checkboxes {
+  vertical-align: middle;
+  margin-right: 5px;
+}

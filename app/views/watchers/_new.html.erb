@@ -71,6 +71,7 @@
   </div>
 
   <p class="buttons">
+    <%= toggle_checkboxes_link('#users_for_watcher input') %>
     <%= submit_tag l(:watcher_filter_button_add_and_continue), :name => nil %>
     <%= submit_tag l(:button_add), :name => nil, :onclick => "hideModal(this);" %>
     <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
