@@ -1,0 +1,7 @@
+# Simplified Chinese strings go here for Rails i18n
+zh:
+  watcher_filter_custom_field_value: "自定义字段值"
+  watcher_filter_group_select: "选择用户组"
+  watcher_filter_role_select: "选择角色"
+  watcher_filter_not_in_any_group: "无关联用户组"
+  watcher_filter_button_add_and_continue: "提交并继续添加"
