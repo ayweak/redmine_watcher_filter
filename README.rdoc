@@ -8,7 +8,7 @@ Add control that filters issue watchers by group, role and custom field values.
 
 == Compatible
 
-Compatible with Redmine 3.3.x.
+Compatible with Redmine 3.3.x, 3.4.x.
 
 == Install
 
