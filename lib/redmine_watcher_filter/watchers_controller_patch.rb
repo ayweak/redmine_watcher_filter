@@ -13,6 +13,7 @@ module WatcherFilter
     end
 
     module InstanceMethods
+      # based on redmine v3.3.0 app/controllers/watchers_controller.rb#L116
       def users_for_new_watcher_with_extra_condition
         scope = nil
         if params[:q].blank? && @project.present?
