@@ -1,7 +1,7 @@
 // -*- coding: utf-8-unix -*-
 
 var WatcherFilter = WatcherFilter || {
-    // based on redmine v3.3.0 public/javascripts/application.js#L540
+    // based on redmine v4.0.0 public/javascripts/application.js#L553
     observeSearchfield: function(fieldId, cfvFieldId, groupFieldId, roleFieldId, targetId, url) {
         $(['#' + fieldId, '#' + cfvFieldId].join(',')).each(function() {
             var $this = $(this);

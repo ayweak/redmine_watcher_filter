@@ -20,8 +20,8 @@ module WatcherFilter
   end
 end
 
-ActionDispatch::Reloader.to_prepare do
+ActiveSupport::Reloader.to_prepare do
   if not CustomValue.included_modules.include?(WatcherFilter::CustomValuePatch)
-    CustomValue.send(:include, WatcherFilter::CustomValuePatch)
+    CustomValue.include WatcherFilter::CustomValuePatch
   end
 end

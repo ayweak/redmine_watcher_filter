@@ -12,7 +12,7 @@ Redmine::Plugin.register :redmine_watcher_filter do
   name 'Redmine Watcher Filter plugin'
   author 'ayweak'
   description 'Filter issue watchers by group, role and custom field values.'
-  version '3.0.0'
+  version '4.0.0-alpha'
   url 'https://github.com/ayweak/redmine_watcher_filter'
   author_url 'https://github.com/ayweak'
 end
