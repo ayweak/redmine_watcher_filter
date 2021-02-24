@@ -1,0 +1,6 @@
+cs:
+  watcher_filter_custom_field_value: "Uživatelské pole hodnota"
+  watcher_filter_group_select: "Vybrat skupinu"
+  watcher_filter_role_select: "Vybrat roli"
+  watcher_filter_not_in_any_group: "Není v žádné skupině"
+  watcher_filter_button_add_and_continue: "Přidat a pokračovat"
