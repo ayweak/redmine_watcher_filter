@@ -37,7 +37,7 @@ module WatcherFilter
       end
       if params[:role_id].present?
         scope = scope.joins(:members => :roles).
-                  where("#{Role.table_name}.id = ?", params[:role_id]).uniq
+                  where("#{Role.table_name}.id = ?", params[:role_id]).distinct
       end
       scope
     end
