@@ -2,11 +2,11 @@
 
 require 'redmine'
 
-require_dependency 'redmine_watcher_filter/hooks'
-require_dependency 'redmine_watcher_filter/custom_value_patch'
-require_dependency 'redmine_watcher_filter/user_patch'
-require_dependency 'redmine_watcher_filter/watchers_controller_patch'
-require_dependency 'redmine_watcher_filter/watchers_helper_patch'
+require_relative 'lib/redmine_watcher_filter/hooks'
+require_relative 'lib/redmine_watcher_filter/custom_value_patch'
+require_relative 'lib/redmine_watcher_filter/user_patch'
+require_relative 'lib/redmine_watcher_filter/watchers_controller_patch'
+require_relative 'lib/redmine_watcher_filter/watchers_helper_patch'
 
 Redmine::Plugin.register :redmine_watcher_filter do
   name 'Redmine Watcher Filter plugin'

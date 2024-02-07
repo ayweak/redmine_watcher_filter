@@ -2,7 +2,7 @@
 
 require_dependency 'custom_value'
 
-module WatcherFilter
+module RedmineWatcherFilter
   module CustomValuePatch
     def self.included(base)
       base.class_eval do
@@ -20,8 +20,8 @@ module WatcherFilter
   end
 end
 
-ActiveSupport::Reloader.to_prepare do
-  if not CustomValue.included_modules.include?(WatcherFilter::CustomValuePatch)
-    CustomValue.include WatcherFilter::CustomValuePatch
+# ActiveSupport::Reloader.to_prepare do
+  if not CustomValue.included_modules.include?(RedmineWatcherFilter::CustomValuePatch)
+    CustomValue.include RedmineWatcherFilter::CustomValuePatch
   end
-end
+# end

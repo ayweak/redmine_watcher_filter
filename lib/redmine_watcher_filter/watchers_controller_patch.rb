@@ -2,7 +2,7 @@
 
 require_dependency 'watchers_controller'
 
-module WatcherFilter
+module RedmineWatcherFilter
   module WatchersControllerPatch
     # based on redmine v4.0.0 app/controllers/watchers_controller.rb#L119
     def users_for_new_watcher
@@ -37,11 +37,11 @@ module WatcherFilter
       end
       if params[:role_id].present?
         scope = scope.joins(:members => :roles).
-                  where("#{Role.table_name}.id = ?", params[:role_id]).uniq
+                  where("#{Role.table_name}.id = ?", params[:role_id])
       end
       scope
     end
   end
 end
 
-WatchersController.prepend WatcherFilter::WatchersControllerPatch
+WatchersController.prepend RedmineWatcherFilter::WatchersControllerPatch
