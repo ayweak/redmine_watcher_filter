@@ -2,7 +2,7 @@
 
 require_dependency 'user'
 
-module WatcherFilter
+module RedmineWatcherFilter
   module UserPatch
     def self.included(base)
       base.class_eval do
@@ -16,8 +16,8 @@ module WatcherFilter
   end
 end
 
-ActiveSupport::Reloader.to_prepare do
-  if not User.included_modules.include?(WatcherFilter::UserPatch)
-    User.include WatcherFilter::UserPatch
+# ActiveSupport::Reloader.to_prepare do
+  if not User.included_modules.include?(RedmineWatcherFilter::UserPatch)
+    User.include RedmineWatcherFilter::UserPatch
   end
-end
+# end

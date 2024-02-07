@@ -5,7 +5,7 @@ require_dependency 'principal'
 require_dependency 'role'
 require_dependency 'member'
 
-module WatcherFilter
+module RedmineWatcherFilter
   module WatchersHelperPatch
     def self.included(base)
       base.class_eval do
@@ -32,8 +32,8 @@ module WatcherFilter
   end
 end
 
-ActiveSupport::Reloader.to_prepare do
-  if not WatchersHelper.included_modules.include?(WatcherFilter::WatchersHelperPatch)
-    WatchersHelper.include WatcherFilter::WatchersHelperPatch
+# ActiveSupport::Reloader.to_prepare do
+  if not WatchersHelper.included_modules.include?(RedmineWatcherFilter::WatchersHelperPatch)
+    WatchersHelper.include RedmineWatcherFilter::WatchersHelperPatch
   end
-end
+# end
